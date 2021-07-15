@@ -18,7 +18,7 @@ org = (25, 25)
 # fontScale
 fontScale = 0.7
 # Blue color in BGR
-color = (120, 250, 0)
+color = (150, 200, 0)
 # Line thickness of 2 px
 thickness = 1
 
@@ -26,18 +26,17 @@ def getContours(src):
     contours, hierarchy = cv2.findContours(src, cv2.RETR_EXTERNAL,
                                             cv2.CHAIN_APPROX_NONE)
     x,y,w,h = 0,0,0,0
-    roiColor = (0,0,0)
+
     for cnt in contours:
         area = cv2.contourArea(cnt)
         if area > 250:
-            #cv2.drawContours(img, cnt,-1,(255,255,255),3)
             peri = cv2.arcLength(cnt, True)
             approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
             x, y, w, h = cv2.boundingRect(approx)
 
     return x+w//2,y+h//2
 
-def detectColor(src, drawingColorValues):
+def detectColor(src):
     imHSV = cv2.cvtColor(src, cv2.COLOR_BGR2HSV)
     count = 0
     newPoints = []
@@ -70,7 +69,7 @@ while True:
     frame = cv2.flip(frame, 1)
     if success:
         img = frame.copy()
-        newPoints = detectColor(frame,drawingColorValues)
+        newPoints = detectColor(frame)
         if newPoints != 0:
             for pts in newPoints:
                 storedPoints.append(pts)
