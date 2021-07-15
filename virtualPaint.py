@@ -84,6 +84,7 @@ while True:
 
         elif k == ord('c'):
             storedPoints = []
+
     else:
         print("Video capture is " + success)
         break
